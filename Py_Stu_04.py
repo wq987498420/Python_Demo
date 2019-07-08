@@ -91,7 +91,7 @@ str3 = "I LOVE YOU"
 str4 = str1.lower()
 print(str4)
 '''
-'''列表：列表是最常用的Python数据类型，它可以作为一个方括号内的逗号分隔值出现。列表中的个数和类型不限
+'''列表：列表是最常用的Python数据类型，它可以作为一个方括号内的逗号分隔值出现。列表中的个数和类型不限。（列表使用中括号）
     '''
 '''1.通过索引取列表中的元素，语法：l列表[索引]
 name = ["关羽","曹操","刘备"]
@@ -140,4 +140,126 @@ a = name.pop(1)
 print(name)
 print(a)'''
 
-'''元组'''
+'''元组：元组和列表一样，也是计算机内存中的一段连续空间，但是元组的特点就是只能查询不能增删改。（元组使用小括号）'''
+'''1.元组创建是将元素写入括号中用逗号隔开即可
+tup1 = ('Google','Runoob',1997,2000)
+tup2 = (1,2,3,4,5)
+tup3 = "a","b","c","d"
+type(tup3)
+<class 'tuple'>
+'''
+'''1.元组只包含一个元素时要在元素后面加上逗号，否则会被当做运算符使用
+tup1 =(50)
+print(type(tup1))   #打印出来为int整型
+
+tup2 = (50,)
+print(type(tup2))   #打印出来为tuple元组型
+'''
+'''2.使用下标索引来访问元组中的值：
+tup1 = ('Google', 'Runoob', 1997, 2000)
+tup2 = (1, 2, 3, 4, 5)
+print("tup1[0]:", tup1[0])
+print("tup2[1:3]:", tup2[1:3])'''
+'''3.元组是不允许修改的，但我们可以对元组进行连接组合
+tup1 = (12, 23, 34)
+tup2 = ('abc','xyz')
+tup3 = tup1 + tup2
+print(tup3)'''
+'''4.元组是不允许删除的，但我们可以使用del语句来删除整个元组
+tup1 = ('Google', 'Runoob', 1997, 2000)
+print(tup1)
+del tup1
+print("删除后的元组：")
+print(tup1)'''
+'''5.元组运算符：元组和字符串一样，元组之间可以使用+号和*号进行运算。这意味着他们可以组合和复制，运算后生成一个新的元组
+print(len(1,2,3))   #计算元素的个数
+print((1,2,3)+(4,5,6))   #将两个元组连接成一个元组
+print(('HI!',)*4)    #将元组内的元素进行复制
+print(3 in (1,2,3))  #判断元素是否存在元组中
+for x in (1,2,3):print(x,)  #迭代
+'''
+'''6.元素索引截取：我们可以通过元素的下标索引截取到一个或一段元素
+L = ('Google','Taobao','Runoob')
+print(L[2])
+print(L[-2])
+print(L[1])'''
+'''7.元组的内置函数
+print(max(1,2,3))  #取元组中最大的值
+print(min(1,2,3))  #取元组中最小的值
+tuple(list)        #将列表转换成元组
+'''
+'''字典是python中另一种可变容器模型，可存储任意类型对象
+ 字典的每个键值（key=>value）对用冒号(:)分割，每个对之间用逗号分隔，整个字典用花括号包括（{}）
+ 如： d = {key1:value1,key2:value2}
+ 字典中键必须是唯一的，但值则不必
+ 值可以取任何数据类型，但键必须是不可变的，如字符串，数字和元组'''
+'''字典的操作：1.增加数据，语法：字典[键] = 值
+info = {'name':'小名','age':18, 'height':1.75}
+print(info)
+info['weight'] = 180
+print(info)'''
+'''2.删除数据，语法：字典.pop(键)   #.pop()删除可将删除的数据通过变量接收
+info = {'name':'小名','age':18, 'height':1.75}
+print(info)
+a = info.pop("name")
+print(info)
+print(a)'''
+'''3.修改数据，语法：字典[键]=值
+info = {'name':'小名','age':18, 'height':1.75}
+print(info)
+info['age']=20
+print(info)'''
+'''4.查询数据，语法：字典[键值]
+info = {'name':'小名','age':18, 'height':1.75}
+print(info['name'])'''
+'''5.给字典添加键值对，在没有该键值对的时候添加，有则不做处理,语法：字典.setdefault(键,值)
+info = {'name':'小名','age':18, 'height':1.75}
+info.setdefault('weight',65)   #字典中不存在该键值对则添加元素
+print(info)
+info.setdefault('height',190)  #字典中存在改键名则不做处理
+print(info)
+'''
+'''6.删除键值对，语法 del 字典[键]
+info = {'name':'小名','age':18, 'height':1.75}
+del info['name']
+print(info)'''
+'''修改键值，语法：字典.update(新字典)
+info = {'name':'小名','age':18, 'height':1.75}
+info.update({'height':1.90})
+print(info)
+'''
+'''清空字典，语法:字典.clear()
+info = {'name':'小名','age':18, 'height':1.75}
+info.clear()
+print(info)
+'''
+'''根据键取值，键值不存在返回None，不会报错，语法：字典.get(键)
+遍历字典中所有的键，语法1：for key in 字典，语法2：for key in 字典.keys()
+遍历字典中所有的值，语法：for balue in 字典.balues()
+遍历字典中所有的键值对，语法：for item in 字典.items()'''
+'''集合(set)是一个无序的不重复元素序列
+可以使用大括号{}或者set()函数创建集合，注意：创建一个空集合必须用set()而不是{}，因为{}是用来创建一个空字典
+创建格式：parame={value01,value02...}/set(value)
+'''
+'''1.去重
+list1 = ["关羽","曹操","刘备","关羽"]
+set1 = set(list1)
+print(set1)'''
+'''2.快速判断元素是否在集合内
+basket = {'orange', 'banana', 'pear', 'apple'}
+a = 'orange' in basket
+print(a)'''
+'''3.两个集合间运算
+a = set('abracadabra')
+b = set('alacazam')
+print(a)
+print(a - b)  # 集合a中包含而集合b中不包含的元素
+print(a | b)  # 集合a或b中包含的所有元素
+print(a & b)  # 集合a和b中都包含了的元素
+print(a ^ b)  # 不同时包含于a和b的元素
+'''
+'''添加元素，语法：s.add(x)/s.update(x)
+   移除元素，语法：s.remove(x)/s.discard(x)/s.pop()
+   计算集合元素数，语法：len(s)
+   清空集合，语法：s.clear()
+   判断元素是否在集合中，语法：x in s'''
