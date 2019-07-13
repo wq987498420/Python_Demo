@@ -213,5 +213,159 @@ p1 = Poodle("泰迪")
 p1.eat()
 p1.drink()
 p1.bark()'''
+'''需求：父类中有一个bark()，但是子类额要在这个方法的基础上加强。
+    1.重写
+    2.在子类中调用父类被重写的方法 
+    3.在这基础上添加新代码...'''
+'''#父类狗狗类
+class Dog(object):
+    #定义属性
+    def __init__(self,type1):
+        self.type = type1
+    #定义方法
+    def eat(self):
+        print(self.type,"需要吃东西...")
+    def bark(self):
+        print(self.type,"汪汪叫...")
 
+#子类继承父类
+class Poodle(Dog):
+    #父类的bark方法，功能不全，所以：
+    #1.重写
+    def bark(self):
+        #2.调用父类被重写的方法：
+        #a.super().bark()
+        super().bark()
+        #b.super(子类,self).bark()  #不写有默认值
+        super(Poodle, self).bark()
+        #c.父类.bark()
+        Dog.bark(self)
+        #添加新代码
+        print(self.type,"摇尾巴...")
+
+p1 = Poodle("泰迪")
+p1.bark()'''
+'''#需求：Dog类只有type属性，泰迪狗希望在原有基础上添加name/age；
+class Dog(object):
+    def __init__(self, type1):
+        self.type = type1
+
+    def eat(self):
+        print(self.type,"需要吃东西...")
+
+#子类继承父类后，添加name/age
+class Poodle(Dog):
+    #添加name/age，需重写__init__方法
+    def __init__(self, name, age, type1):
+        #子类重写父类后，父类的__init__()将不会执行那么type属性就不会被绑定了
+        #1.手动绑定父类的type属性；2.手动调用父类的__init__()
+        #方法一
+        super().__init__(type)
+        #方法二（几乎不用）
+        super(Poodle, self).__init__(type1)
+        #方法三
+        Dog.__init__(self,type1)
+        #添加新属性
+        self.name = name
+        self.age = age
+p1 = Poodle("小灰灰",2,"泰迪")
+print(p1.name,p1.age,p1.type)'''
+'''需求：假设两个甚至三个类里面的属性和方法都很好用，那么子类能不能继承'''
+'''#定义一个神仙类
+class God(object):
+    #定义不涉及属性
+    def fly(self):
+        print("飞...")
+    #定义方法
+    def speak(self):
+        print("说人话...")
+#定义普通动物类
+class Animal(object):
+    def run(self):
+        print("跑...")
+    def speak(self):
+        print("说兽语...")
+# 定义一个坐骑类：多继承就是一个子类，继承多个父类。
+class ZuoJi(God,Animal):
+    # 让动物技能说人话有能说兽语的
+    def speak(self):
+        # 有选择
+        str1 = input("1说人话，2说兽语")
+        if str1 == "1":
+            #说人话，调用God父类的speak方法
+            God.speak(self)
+        elif str1 == "2":
+            #说兽语，调用Animal父类的speak方法
+            Animal.speak(self)
+        else:
+            print("没有此类语言所对应!!!")
+
+z1 = ZuoJi()
+z1.run()
+z1.fly()
+#多继承，如果多个类都有同一方法：默认执行第一个被继承的父类中的方法。（后面的都不执行了）
+z1.speak()
+#拓展：子类继承了哪些父类？？继承顺序什么样？？
+# print(ZouJi.__mro__)   #返回值是一个元组：继承顺序，从自身开始一直到所有父类，包括object'''
+'''#私有属性：只能类内部访问，外部无法访问的属性。
+#   女孩的年龄，男孩的存款，就业人事的薪资。。。
+#定义女孩类
+class Girl(object):
+    def __init__(self, name, age):
+        self.name = name
+        # 年龄私有
+        self.__age = age
+    #定义一个方法，向外部提供有私有私有属性的方法
+    def get_age(self):
+        return self.__age
+    #定义一个方法，修改内部私有属性
+    def set_age(self, num):
+        self.__age = num
+
+g1 = Girl("小红", 18)
+print(g1.name)
+#print(g1.__age)   #无法访问
+
+# 修改私有属性和获取私有属性
+g1.set_age(28)
+print(g1.get_age())
+#私有属性可以被继承，但能否被访问，就看类是否提供方法了。
+    #注意：晚上答题按照不能继承回答
+class New_Girl(Girl):
+    pass
+g2 = Girl("小白", 28)
+#设置和获取私有属性
+print(g1.get_age( ))
+g1.set_age(88)
+print(g1.get_age())
+'''
+'''
+面向对象三大特征：
+    1.封装：把功能和属性封装到一个对象中，对外提供方法，隐藏现实。
+    2.继承：子类可以使用父类的属性和方法
+    3.多态：使用一个对象的地方，同样可以使用他的子类对象。
+    # 人吃肉   传肉给人吃   如果汉堡继承了肉   传汉堡也可以
+
+class Meat(object):
+    def __init__(self):
+        self.type = "肉"
+class Ham(Meat):
+    #汉堡除了肉还有别的东西
+    def __init__(self):
+        #调用父类中的__init__()
+        super().__init__()
+        self.type += "+(面包+蔬菜+萨拉...)"
+class Person(object):
+    def eat_meat(self,meat):
+        print("吃%s"%meat.type)
+
+    def eat_meat(self, ham):
+        print("吃%s" % ham.type)
+p1 = Person()
+m1 = Meat()
+h1 = Ham()
+
+p1.eat_meat(m1)
+p1.eat_meat(h1)
+ '''
 
