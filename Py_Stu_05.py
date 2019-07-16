@@ -367,4 +367,136 @@ h1 = Ham()
 
 p1.eat_meat(m1)
 p1.eat_meat(h1)
+
+#鸭子类型：看起来像鸭子，不一定是鸭子
+#看起来像肉的石头
+class Stone(object):
+    def __init__(self):
+        self.type = "石头(看起来像肉)"
+s1 = Stone()
+p1.eat_meat(s1)
  '''
+'''# 类属性：定义到方法上面的属性，只占用一片内存空间，实例属性上面没有要用得去类上面获取（所有实例对象共享）
+#实例属性：就是每个实例对象各有一份的属性。（__init__()里面的属性）
+
+#定义狗狗类
+class Tidy(object):
+    type = "泰迪"
+    def __init__(self,name,age):
+        self.name = name
+        self.age = age
+
+t1 = Tidy("小灰灰",2)
+print(Tidy.type,t1.name,t1.age)
+
+#修改类属性
+Tidy.type = "Tidy"
+print(Tidy.type)'''
+'''#实例方法：以前接触的方法除了魔法方法，几乎都是实例方法
+#类方法：操作到类属性的方法，一般提升为类方法
+
+#定义一个boby类
+class Baby(object):
+    country = "韩国"   #类方法 国籍
+    #实例属性
+    def __init__(self, name):
+        self.name = name
+        self.age = 0
+    def say_hi(self):
+        print(self.name,"wa...")
+    #类方法：如果像使用或者修改类属性，那么就要把方法定义为类方法
+    @classmethod
+    def set_country(cls, str1):
+        cls.country = str1
+
+    #静态方法：当一个方法不涉及到实例属性实例方法和类属性类方法的 时候
+    @staticmethod
+    def say():
+        print("韩国人爱说思密达")
+b1 = Baby("思密达")
+#实例方法，实例对象能够调用，类无法直接调用
+#b1.say_hi()
+#Baby.say_hi(b1)
+#类方法可以通过类和对象共同调用
+print(b1.country)
+b1.set_country("高句丽")
+print(b1.country)
+Baby.set_country("高丽")
+print(Baby.country)
+#静态方法：可以使用对象和类
+b1.say()
+Baby.say()'''
+'''__del__():是个魔法方法，对象被彻底删除的时候（如果有多个变量使用这个引用那么必须所有变量都被删除）或文件执行结束。（会自动调用__del__()）
+class Student(object):
+    def __del__(self):
+        print("已删除")
+
+print("程序开始")
+s1 = Student()
+s2 = s1
+del s1
+del s2
+print("程序即将结束，还差一步数据销毁")'''
+'''#__new__()：它是魔法方法，调用类创建对象实例的时候被自动调用
+#__new__()：它可以依靠：object.__new__(cls)
+#定义空白类学生
+class Student(object):
+    def __new__(cls):
+        obj = object.__new__(cls)
+        return  obj  #__new__()魔法方法必须返回一个对象
+
+s1 = Student() #默认触动Student类里面的__new__()：功能就是创建对象实例
+print(s1)
+
+# 原理
+def create():
+    stu = object.__new__(Student)
+    return stu
+
+s2 = create()
+print(s2)'''
+'''#new/init/del
+class Student(object):
+    def __new__(cls, *args, **kwargs):
+        obj = object.__new__(cls)
+        print("对象创建出来了")
+        return obj
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        print("对象被初始化属性了")
+    def say_hi(self):
+        print(self.name,self.age,"对象被使用了")
+    def __del__(self):
+        print("对象被删除了")
+
+s1 = Student("张三",18)
+s1.say_hi()
+del s1'''
+
+'''#单例模式
+class ShoopingCar(object):
+    __instance = None
+    __is_first = True
+    def __new__(cls, *args, **kwargs):
+        if cls.__instance is None:
+            cls.__instance = object.__new__(cls)
+            return cls.__instance
+        else:
+            return  cls.__instance
+
+    def __init__(self):
+        if self.__is_first == True:
+            self.money = 0
+            self.__is_first = False
+
+s1 = ShoopingCar()
+print(s1.money)
+s1.money = 2000
+
+s2 = ShoopingCar()
+print(s2.money)
+s2.money += 5
+
+s3 = ShoopingCar()
+print(s3.money)'''
