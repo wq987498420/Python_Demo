@@ -132,7 +132,7 @@ try:
     fn()
 except Exception as e:
     print("捕获到了函数内部的异常", e)'''
-#异常原理：利用关键字，抛出一个异常类，或者异常类的对象
+'''#异常原理：利用关键字，抛出一个异常类，或者异常类的对象
 #print(111)
 #raise NameERROR  #异常类本身，没有对异常的描述。（__str__()）
 #print(222)
@@ -147,4 +147,104 @@ if len(str1) == 11:
     print("恭喜您输入正确!!!", str1)
 else:
     #不是11位报错
-    raise TeleNumError
+    raise TeleNumError '''
+#csv是以重纯文本形式储存表格数据的文件。该文件有任意数目的记录组成，每条记录被分隔符分割为字段（最常见的分割符是逗号和制表符）
+#且每条记录都有相同的字段序列，因此csv相当于一个结构化表的纯文本形式。
+#csv文件读取和写入：在文件读写操作中，常用两种读写方式是列表读写和字典读写
+#1.文件读取
+#csv文件读取主要是使用reader()和Dictreader()方法，二者均接受一个csv文件参数，并返回一个用于文件读取迭代器
+#区别：reader()方法获取的是一行行列表数据的迭代器，每行的数据可通过下标来获取
+    #DictReader()方法获取的是一行行字典数据的迭代器，每行的数据可通过键来获取
+'''import csv
+#列表读取
+with open("data.csv","r",encoding="utf-8") as fp:
+    reader = csv.reader(fp)  #返回读取迭代器
+    titles = next(reader)   #提取出文件记录标题
+    print(type(titles))   #<class "list">
+    print(titles)    #["id","name","city"]
+    for x in reader:    #遍历向下迭代
+        print(x)     #["1","Mike", "Beijing"]
+        id = x[0]
+        name = x[1]
+        city = x[2]
+        print({"id":id, "name":name,"city":city})
+
+#字典读取
+with open("data.csv","r",encoding="utf-8") as fp:
+    reader = csv.DictReader(fp)
+    for x in reader:
+        print(type(x))
+        print(x)
+        id = x["id"]
+        name = x["name"]
+        city = x["city"]
+        print({"id":id, "name": name, "city": city})'''
+
+#文件写入：writer()用于列表数据写书,DictWriter()用于字典数据写入。#二者使用方法比较简单，但需要注意的是由于是写入文件，需要指明文件，需要指明文件的编码方式（特别是需要写入中文字符时）
+import csv
+#列表写入
+#设置记录标题（列表）和记录值（一个嵌套元组集和列表集列表）
+headers = ["id","name","province"]
+values = [("001","ShenZhen","GuangDong"),
+          ("002","WuHan","HuBei"),
+          ("003","ChengDu","SiChuan")]
+#使用open函数时设置参数encoding以防乱码
+with open("citylist.csv","w",encoding="utf-8", newline="") as fp:
+    writer = csv.writer(fp)
+    writer.writerow(headers)
+    writer.writerows(values)
+
+#字典写入
+#设置记录标题（列表）和记录值（一个嵌套字典集的列表）
+headers = ["id","name","province"]
+values = [{"id":"001","name":"ShenZhen","province":"GuangDong"},
+        {"id":"002","name":"WuHan","province":"HuBei"},
+        {"id":"003","name":"ChengDu","province":"SiChuan"} ]
+with open("citydict.csv","w",encoding="utf-8",newline="") as fp:
+    writer = csv.DictWriter(fp,headers)
+    writer.writeheader()
+    writer.writerows(values)
+
+#在打开待写入csv文件时，这里我们还传入了一个newline参数，并且其值为空字符串，这么做是为了防止在每次写完一行后
+#其会自动再写入一个换行符，如下文为设置和不设置newline的文件写入对应结果：
+#设置了newline的文件写入结果：
+'''
+id,name,province
+001,ShenZhen,GuangDong
+002,WuHan,HuBei
+003,ChengDu,SiChuan'''
+#未设置newline的文件写入结果：
+'''
+id,name,province
+
+001,ShenZhen,GuangDong
+
+002,WuHan,HuBei
+
+003,ChengDu,SiChuan
+
+'''
+#JSON是一种轻量级的数据交换格式，简洁和清晰的层次结构使得JSON成为理想的数据交换语言。易于人阅读和编写，同时也易于机器解析和生成，并有效地提升网络传输效率。
+#使用JSON函数，导入JSON库：import JSON
+#json.dumps  将python对象编码成JSON字符串
+#json.loads  将已编码的JSON字符串解码为python对象
+#json.dumps 用于将python对象编码成json字符串。
+#语法：json.dumps(obj,skipkeys=False, ensure_ascii = True,check_circular=True,allow_nan=True,
+#cls=None,indent=None,separators=None,encoding="utf-8",default=None,sort_keys=False,**kw)
+#import json
+#data = [{"a":1,"b":2,"c":3,"d":4,"e":5}]
+#json = json.dumps(data)
+#print(json)
+#打开键值排序、缩进为4，以",",":"为分隔
+#import json
+#data = [{"a":1,"b":2,"c":3,"d":4,"e":5}]
+#json = json.dumps(data,sort_keys=True,indent=4,separators=(",",":"))
+#print(json)
+#json.loads用于解码JSON数据，该函数返回python字段的数据类型。
+#语法：json.loads(s,encoding=None,cls=None,object_hook=None,parse_float=None,parse_int=None,
+#parse_constant=None,object_pairs_hook=None,**kw)
+import json
+jsonData = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
+text = json.loads(jsonData)
+print(text)
+
