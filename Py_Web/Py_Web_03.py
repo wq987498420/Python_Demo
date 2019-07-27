@@ -92,6 +92,7 @@ driver = webdriver.Firefox()
         1.clear()     清空文本
         2.send_keys   模拟输入
         3.click()     单击元素
+        
         4.back()      后退页面
         5.maximize_window()   最大化窗口（模拟浏览器最大化按钮）
         6.submit      提交表单
